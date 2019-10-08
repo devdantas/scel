@@ -32,13 +32,13 @@ public class AlunoController {
 	 * @return o html /CadastraLivro
 	 */
 	@GetMapping("/cadastrar")
-	public ModelAndView cadastraLivro(Aluno aluno) {
+	public ModelAndView cadastraAluno(Aluno aluno) {
 		ModelAndView mv = new ModelAndView("cadastrarAluno");
 		mv.addObject("aluno", aluno);
 		return mv;
 	}
 	
-	@GetMapping("/edit/{isbn}") // diz ao metodo que ira responder a uma requisicao do tipo get
+	@GetMapping("/edit/{ra}") // diz ao metodo que ira responder a uma requisicao do tipo get
 	public ModelAndView mostraFormAdd(@PathVariable("ra") String ra) {
 		ModelAndView modelAndView = new ModelAndView("atualizaAluno");
 		modelAndView.addObject("aluno", repository.findByRa(ra)); // o repositorio e injetado no controller
@@ -48,7 +48,7 @@ public class AlunoController {
 	@GetMapping("/delete/{id}")
 	public ModelAndView delete(@PathVariable("id") Long id) {
 		repository.deleteById(id);
-		ModelAndView modelAndView = new ModelAndView("consultarLivro");
+		ModelAndView modelAndView = new ModelAndView("consultarAluno");
 		modelAndView.addObject("alunos", repository.findAll());
 		return modelAndView;
 	}
@@ -61,7 +61,7 @@ public class AlunoController {
 		}
 		try {
 			Aluno jaExiste = null;
-			jaExiste = repository.findByRa(aluno.getRA());
+			jaExiste = repository.findByRa(aluno.getRa());
 			if (jaExiste == null) {
 				repository.save(aluno);
 				modelAndView = new ModelAndView("consultarAluno");
@@ -83,7 +83,6 @@ public class AlunoController {
 			return new ModelAndView("atualizaAluno");
 		}
 		Aluno umAluno = repository.findById(id).get();
-		umAluno.setRA(aluno.getRA());
 		umAluno.setNome(aluno.getNome());
 		umAluno.setEmail(aluno.getEmail());
 		repository.save(umAluno);

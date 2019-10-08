@@ -14,7 +14,7 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;	
-	@NaturalId
+	@NaturalId	
 	@Column(nullable = false, length = 100)
 	@NotEmpty(message="O RA deve ser preenchido")
 	private String ra;
@@ -32,6 +32,7 @@ public class Aluno {
 	public Aluno() {
 		
 	}
+	
 	public Aluno(String ra, String nome, String email) {
 		this.ra = ra;
 		this.nome = nome;
@@ -46,16 +47,18 @@ public class Aluno {
 		this.id = id;
 	}
 	
-	public String getRA() {
+	public String getRa() {
 		return ra;
 	}
-	public void setRA(String ra) {
+	
+	public void setRa(String ra) {
 		this.ra = ra;
 	}
 	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -63,6 +66,7 @@ public class Aluno {
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
