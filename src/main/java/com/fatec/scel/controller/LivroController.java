@@ -54,7 +54,7 @@ public class LivroController {
 		return modelAndView;
 	}
 
-	@PostMapping("/save")
+	/* @PostMapping("/save")
 	public ModelAndView save(@Valid Livro livro, BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
 		if (result.hasErrors()) {
@@ -75,6 +75,30 @@ public class LivroController {
 			System.out.println("erro ===> " + e.getMessage());
 			return modelAndView; // captura o erro mas nao informa o motivo.
 		}
+	} */
+
+	@PostMapping("/save")
+	public ModelAndView save(@Valid Livro livro, BindingResult result) {
+		ModelAndView mv = new ModelAndView("cadastrarLivro");
+		if (result.hasErrors()) {
+			mv.addObject("fail", "Dados inválidos"); // quando fail nao eh nulo a msg aparece na tela
+			return mv;
+		}
+		try {
+			Livro jaExiste = null;
+			jaExiste = repository.findByIsbn(livro.getIsbn());
+			if (jaExiste == null) {
+				repository.save(livro);
+				mv.addObject("success", "Livro cadastrado com sucesso"); // success nao eh nulo
+				return mv;
+			} else {
+				mv.addObject("fail", "Livro já cadastrado."); // fail nao eh nulo a msg aparece na tela
+				return mv;
+			}
+		} catch (Exception e) {
+			mv.addObject("fail", "erro ===> " + e.getMessage());
+			return mv;
+		}
 	}
 
 	@PostMapping("/update/{id}")
@@ -85,7 +109,7 @@ public class LivroController {
 		}
 		Livro umLivro = repository.findById(id).get();
 		umLivro.setAutor(livro.getAutor());
-		umLivro.setIsbn(livro.getIsbn());
+		// umLivro.setIsbn(livro.getIsbn());
 		umLivro.setTitulo(livro.getTitulo());
 		repository.save(umLivro);
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
