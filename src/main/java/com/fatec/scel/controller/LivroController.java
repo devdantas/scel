@@ -3,6 +3,7 @@ package com.fatec.scel.controller;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class LivroController {
 //insert into livro values ('1', 'Pressman','aaaa', 'engenharia')
 	@Autowired
 	private LivroRepository repository;
-
+	
 	@GetMapping("/consulta")
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("consultarLivro");
